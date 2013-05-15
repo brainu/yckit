@@ -198,17 +198,14 @@ if($this->do=='article_insert'||$this->do=='article_update'){
 			foreach($fields as $v){
 				$data=explode(",",$v);
 				$data_value=@$_POST['field_'.$data[1]];
-				if(!empty($data_value)){
-					if($this->db->value(DB_PREFIX."content_field_data","data_value","article_id=$article_id AND field_id=".$data[0])){
-						$this->db->update(DB_PREFIX."content_field_data",array('data_value'=>$data_value),"article_id=$article_id AND field_id=".$data[0]);
-					}else{
-						$this->db->insert(DB_PREFIX."content_field_data",array(
-							'data_value'=>$data_value,
-							'article_id'=>$article_id,
-							'field_id'=>$data[0]
-						));	
-					}
-					
+				if($this->db->value(DB_PREFIX."content_field_data","data_id","article_id=$article_id AND field_id=".$data[0])){
+					$this->db->update(DB_PREFIX."content_field_data",array('data_value'=>$data_value),"article_id=$article_id AND field_id=".$data[0]);
+				}else{
+					$this->db->insert(DB_PREFIX."content_field_data",array(
+						'data_value'=>$data_value,
+						'article_id'=>$article_id,
+						'field_id'=>$data[0]
+					));	
 				}
 			}
 		}
