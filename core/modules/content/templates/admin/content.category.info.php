@@ -45,8 +45,9 @@
 		<!--{if $field}-->
 			<!--{foreach from=$field item=field}-->
 			<div style="padding:4px 0">
-			<input type="hidden"name="field_id[{$field.id}]" size="30" value="{$field.id}"/>
-			字段名称：<input type="text"  class="field-name" class="input" name="field_name[{$field.id}]" size="30" value="{$field.name}"/>&nbsp;显示文本：<input type="text" class="input" name="field_text[{$field.id}]" size="30" value="{$field.text}"/>&nbsp;<input type="checkbox" name="field_status[{$field.id}]" value="1" {if $field.status==1}checked{/if}/>&nbsp;启用&nbsp;<input type="checkbox" name="field_delete[]" value="{$field.id}"/>&nbsp;删除
+			<input type="hidden"name="field_id[{$field.id}]" size="30" value="{$field.id}" />
+			字段名称：<input type="text"   class="input"  class="input" name="field_name[{$field.id}]" size="30" value="{$field.name}"/>&nbsp;
+			显示文本：<input type="text" class="input" name="field_text[{$field.id}]" size="30" value="{$field.text}"/>&nbsp;<input type="checkbox" name="field_status[{$field.id}]" value="1" {if $field.status==1}checked{/if}/>&nbsp;启用&nbsp;<input type="checkbox" name="field_delete[]" value="{$field.id}"/>&nbsp;删除
 			&nbsp;<a href="javascript:;" onclick="add_value()"title="新增">[+]</a>
 			</div>
 			<!--{/foreach}-->
@@ -72,7 +73,7 @@ $(function(){
 		<!--{if $mode=='insert'}-->
 		add_value();add_value();
 		<!--{else}-->
-		add_value();add_value();
+		add_value();
 		<!--{/if}-->
 
 
