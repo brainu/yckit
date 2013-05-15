@@ -24,7 +24,7 @@ function clear_cache($filename=''){
 				continue;
 			}
 			while ($file = readdir($folder)){
-				if ($file == '.'||$file=='..'){
+				if ($file == '.'||$file=='..'||$file=='index.htm'){
 					continue;
 				}
 				if (is_file($dir.$file)){
