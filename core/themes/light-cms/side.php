@@ -40,7 +40,7 @@
 <div class="widget">
   <ul class="list">
 	<!--{foreach from=$link_list item=link}-->
-		<li class="left"><a href="<!--{$link.url}-->" target="_blank" rel="nofollow"><!--{$link.name|escape:html}--></a></li>
+		<li class="left"><a href="<!--{$link.url}-->" target="_blank"><!--{$link.name|escape:html}--></a></li>
 	<!--{/foreach}-->
   </ul>
 	<br class="clear" />
