@@ -20,7 +20,7 @@ $query[]="CREATE TABLE IF NOT EXISTS `".DB_PREFIX."content_article` (
   `article_is_nofollow` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `article_is_display` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `category_id` smallint(3) unsigned NOT NULL DEFAULT '0',
-  `user_id` int(20) unsigned NOT NULL DEFAULT '0',
+  `user_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`article_id`),
   KEY `article_title` (`article_title`,`article_author`,`category_id`,`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
@@ -52,7 +52,7 @@ $query[]="CREATE TABLE IF NOT EXISTS `".DB_PREFIX."content_comment` (
   `comment_ip` varchar(50) NOT NULL DEFAULT '',
   `comment_agent` varchar(255) NOT NULL DEFAULT '',
   `comment_is_display` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `parent_id` int(8) unsigned NOT NULL DEFAULT '0',
+  `parent_id` bigint(8) unsigned NOT NULL DEFAULT '0',
   `article_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `user_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`comment_id`),
@@ -81,7 +81,7 @@ $query[]="CREATE TABLE IF NOT EXISTS `".DB_PREFIX."content_field` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 
 $query[]="CREATE TABLE IF NOT EXISTS `".DB_PREFIX."content_field_data` (
-  `data_id` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `data_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `data_value` text NOT NULL,
   `article_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `field_id` int(4) unsigned NOT NULL DEFAULT '0',
