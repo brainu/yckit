@@ -11,7 +11,6 @@
 <script>
 var is_ajax,p;
 $(function(){
-	$('#menu-0').addClass("current");
 	{if $article}
 	p=1;
 	is_ajax=0;

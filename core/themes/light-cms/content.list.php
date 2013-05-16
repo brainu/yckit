@@ -9,7 +9,6 @@
 <!--{include file="static.php"}-->
 <script>
 $(function(){
-	$('#menu-{$category.id}').addClass("current");
 	<?php $this->hook('onload');?>
 });
 </script>

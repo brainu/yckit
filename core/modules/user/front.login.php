@@ -16,15 +16,14 @@ if($this->do=='login-check'){
 	}else{
 		$sql="SELECT * FROM ".DB_PREFIX."user WHERE user_nickname='".$user_login."' and user_key='".$user_key."'";
 	}
-	//exit($sql);
 	$row=$this->db->row($sql);
 	if($row){
+		if(!empty($row['open_id']))echo('您不是网站注册会员，请使用第三方登陆！');
 		if($row['user_status']==0)echo('账户可能锁定或者没有激活！');
 		$_SESSION['user_id']=$row['user_id'];
 		$_SESSION['user_login']=$row['user_login'];
 		$_SESSION['user_nickname']=$row['user_nickname'];
 		$_SESSION['role_id']=$row['role_id'];
-		$_SESSION['open_id']=$row['open_id'];
 		$update=array();
 		$update['user_login_time']=time();
 		$update['user_login_ip']=get_ip();

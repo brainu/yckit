@@ -2,6 +2,7 @@
 if(!defined('ROOT'))exit('Access denied!');
 if($this->do=='qq'){
 	check_request();
+	$_SESSION['REFERER']=$_SERVER['HTTP_REFERER'];
 	$_SESSION['qq_appid']=$this->config['qq_appid']; 
 	$_SESSION['qq_appkey']=$this->config['qq_appkey']; 
 	$_SESSION['qq_appcallback']=$this->config['qq_appcallback']; 

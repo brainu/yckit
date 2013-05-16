@@ -1,4 +1,5 @@
 <?php exit?>
+
 <!--{if $template.session.user_id}-->
 <ul id="user-menu">
 	<li>你好！</li>
@@ -8,10 +9,7 @@
 			<li><a href="javascript:user_box('头像设置',160,190,'avatar');"><img src="{$path}data/user/<!--{$template.session.user_id}-->.jpg" onerror="this.src='{$path}core/images/avatar.jpg'" align="absmiddle" width="60" style="margin:5px"/></a></li>
 			<li><a href="javascript:user_box('修改密码',420,200,'password');">修改密码</a></li>
 			<li><a href="javascript:user_box('头像设置',160,190,'avatar');">头像设置</a></li>
-		
-			<!--{if $config.qq}-->
-	<li><a href="{$path}front.php?action=user&do=qq">绑定 QQ</a></li>
-<!--{/if}-->
+ 
 		</ul>
 	</li>
 	<!--{if $config.content_draft_status==1}-->
@@ -36,3 +34,4 @@ $(function(){
 	<a href="javascript:user_box('会员登陆',400,220,'login');">登录</a>
 	<a href="javascript:user_box('会员注册',400,300,'join');">注册</a>
 <!--{/if}-->
+
