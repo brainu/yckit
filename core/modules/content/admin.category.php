@@ -170,7 +170,9 @@ if($this->do=='category_insert'||$this->do=='category_update'){
 if($this->do=='category_delete'){
 	$category_id=empty($_GET['category_id'])?0:intval($_GET['category_id']);
 	#删除该目录
-	rm_dir(ROOT.'/'.$content->category_parent_path($category_id));
+	if($this->config['content_mode']==1){
+		rm_dir(ROOT.'/'.$content->category_parent_path($category_id));
+	}
 	#读取内容并删除相关联的杂项
 	$sql="SELECT article_id,article_image,article_file FROM ".DB_PREFIX."content_article WHERE category_id=$category_id";
 	$result=$this->db->result($sql);
@@ -179,7 +181,7 @@ if($this->do=='category_delete'){
 		//提取该内容附属的附件文件名并删除
 		$file=explode(",",$row['article_file']);
 		foreach($file as $v){
-			@unlink(ROOT."/".$v);
+			@unlink(ROOT.$v);
 		}
 		$this->db->delete(DB_PREFIX."content_comment","article_id=".$row['article_id']);//删除内容评论
 	}
