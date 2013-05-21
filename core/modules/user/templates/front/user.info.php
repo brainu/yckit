@@ -9,11 +9,10 @@
 			<li><a href="javascript:user_box('头像设置',160,190,'avatar');"><img src="{$path}data/user/<!--{$template.session.user_id}-->.jpg" onerror="this.src='{$path}core/images/avatar.jpg'" align="absmiddle" width="60" style="margin:5px"/></a></li>
 			<li><a href="javascript:user_box('修改密码',420,200,'password');">修改密码</a></li>
 			<li><a href="javascript:user_box('头像设置',160,190,'avatar');">头像设置</a></li>
- 
 		</ul>
 	</li>
 	<!--{if $config.content_draft_status==1}-->
-	<li><a href="javascript:draft();">在线投稿</a></li>
+	<li><a href="javascript:draft(700,{if $config.code_status==1}620{else}520{/if});">在线投稿</a></li>
 	<!--{/if}-->
 	<li><a href="javascript:logout();">退出</a></li>
 </ul>
@@ -31,7 +30,6 @@ $(function(){
 });
 </script>
 <!--{else}-->
-	<a href="javascript:user_box('会员登陆',400,220,'login');">登录</a>
-	<a href="javascript:user_box('会员注册',400,300,'join');">注册</a>
+	<a href="javascript:user_box('会员登陆',400,{if $config.code_status==1}340{else}220{/if},'login');">登录</a>
+	<a href="javascript:user_box('会员注册',400,{if $config.code_status==1}400{else}320{/if},'join');">注册</a>
 <!--{/if}-->
-

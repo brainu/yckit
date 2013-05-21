@@ -7,6 +7,12 @@ if($this->do=='login'){
 }
 if($this->do=='login-check'){
 	check_request();
+	$code=empty($_POST['code'])?'':addslashes(trim($_POST['code']));
+	if($_SESSION['code']!=$code){
+		exit('验证码错误');
+	}else{
+		unset($_SESSION['code']);
+	}
 	$user_login=empty($_POST['user_login'])?'':trim(addslashes($_POST['user_login']));
 	$user_key=empty($_POST['user_key'])?'':md5($_POST['user_key']);
 	if(empty($user_login))die('帐号不能为空');

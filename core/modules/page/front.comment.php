@@ -77,6 +77,12 @@ if($this->do=='comment'){
 }
 if($this->do=='comment_insert'){
 	check_request();
+	$code=empty($_GET['code'])?'':addslashes(trim($_GET['code']));
+	if($_SESSION['code']!=$code){
+		exit('ERROR:CODE');
+	}else{
+		unset($_SESSION['code']);
+	}
 	$comment_name=empty($_GET['comment_name'])?'':addslashes(trim($_GET['comment_name']));
 	$comment_email=empty($_GET['comment_email'])?'':addslashes(trim($_GET['comment_email']));
 	$comment_site=empty($_GET['comment_site'])?'':addslashes(trim($_GET['comment_site']));

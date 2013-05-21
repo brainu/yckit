@@ -10,18 +10,18 @@ if($this->do=='draft'){
 }
 if($this->do=='draft_insert'){
 	check_request();
+	$code=empty($_POST['code'])?'':addslashes(trim($_POST['code']));
+	if($_SESSION['code']!=$code){
+		alert('验证码错误');
+	}else{
+		unset($_SESSION['code']);
+	}
 	if(empty($_SESSION['user_id']))http_404();
 	if($this->config['content_draft_status']==0)http_404();
 	$draft_title=empty($_POST['draft_title'])?'':trim(addslashes($_POST['draft_title']));
 	$draft_content=empty($_POST['draft_content'])?'':trim(addslashes($_POST['draft_content']));
 	$draft_author=empty($_POST['draft_author'])?'':trim(addslashes($_POST['draft_author']));
 	$category_id=empty($_POST['category_id'])?'':intval($_POST['category_id']);
-	/*
-	$code=empty($_POST['code'])?'':trim(addslashes($_POST['code']));
-	if($code!=$_SESSION['code']){
-		alert('验证码错误');
-	}
-	*/
 	if($draft_title=='')alert('标题不能为空');
 	if($draft_content=='')alert('内容不能为空');
 	if($draft_author=='')alert('作者不能为空');

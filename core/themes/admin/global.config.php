@@ -6,10 +6,9 @@
 	<div class="blank"></div>
 		<form action="?action=global&do=config_update" method="post" enctype="multipart/form-data">
 <div id="tab">
-	<a href="#0" id="tab_0" class="hover" onclick="tab(0,4)">基本信息设置</a>
-	<a href="#1" id="tab_1" onclick="tab(1,4)">主题控制设置</a>
-	<a href="#2" id="tab_2" onclick="tab(2,4)">邮件服务器设置</a>
-	<a href="#3" id="tab_3" onclick="tab(3,4)">水印设置</a>
+	<a href="#0" id="tab_0" class="hover" onclick="tab(0,3)">基本信息设置</a>
+	<a href="#1" id="tab_1" onclick="tab(1,3)">主题控制设置</a>
+	<a href="#2" id="tab_2" onclick="tab(2,3)">功能控制设置</a>
 </div>
 		<div id="content_0">
 		(站点标题)<div class="blank"></div>
@@ -43,6 +42,19 @@
 		</div>
 
 		<div id="content_2" style="display:none">
+			<fieldset>
+			<legend>验证码设置</legend>
+			<table cellspacing="10">
+			<tr>
+			<td>开关:</td>
+			<td><input type="radio" name="code_status" value="1" {if $config.code_status==1}checked{/if}/> 启用
+			<input type="radio" name="code_status" value="0" {if $config.code_status==0}checked{/if}/> 禁用</td>
+			</tr>
+			</table>
+			</fieldset>	
+  <br />
+			 <fieldset>
+<legend>邮件服务器设置</legend>
 		(邮件服务器主机:IP地址或者主机名称)<div class="blank"></div>
 		<input x-webkit-speech class="input" type="text" name="smtp_server" size="40" value="{$config.smtp_server|escape:html}"/>
 		端口：<input x-webkit-speech class="input" type="text" name="smtp_port" size="5" value="{$config.smtp_port|escape:html}"/><div class="blank"></div>
@@ -52,9 +64,11 @@
 		<input x-webkit-speech class="input" type="password" name="smtp_password" size="40" value="{$config.smtp_password|escape:html}"/><div class="blank"></div>
 		(邮件发送地址:请填写发送邮件地址)<div class="blank"></div>
 		<input x-webkit-speech class="input" type="text" name="smtp_mail" size="40" value="{$config.smtp_mail|escape:html}"/><div class="blank"></div>
-		</div>
-		<div id="content_3" style="display:none">
-	<table cellspacing="10">
+  </fieldset>
+  <br />
+ <fieldset>
+<legend>水印设置</legend>
+<table cellspacing="10">
 <tr>
 	<td>水印开关:</td>
 	<td><input x-webkit-speech type="radio" name="watermark_status" size="15" value="1" {if $config.watermark_status==1}checked{/if}/> 启用
@@ -90,6 +104,8 @@
 	</tr>
 
 	</table>
+ </fieldset>
+	  <br />
 	</div>
 <!--{$plugin}-->
 		<input type="submit" value=" 提 交 " class="button"/>

@@ -21,6 +21,20 @@ function get_comment(type,id,page){
 				var comment_email=$('#comment_email').val();
 				var comment_site=$('#comment_site').val();
 				var parent_id=$('#parent_id').val();
+				var code_status=$('#code_status').val();
+				if(code_status==1){
+					var code=$('#code').val();
+					if($.trim(code)==''){
+						alert('验证码不能为空');
+						$('#code').focus();
+						return false;
+					}
+					if(code.length!=4){
+						alert('验证码长度不正确');
+						$('#code').focus();
+						return false;
+					}		
+				}
 				if($.trim(comment_content)==''){
 					alert('内容不能为空');
 					$('#comment_content').focus();
@@ -44,9 +58,13 @@ function get_comment(type,id,page){
 				}
 				$.ajax({
 					type:"GET",
-					url:PATH+"front.php?action="+type+"&do=comment_insert&comment_content="+encodeURI(comment_content)+"&comment_name="+encodeURI(comment_name)+"&comment_email="+encodeURI(comment_email)+"&comment_site="+encodeURI(comment_site)+"&"+type_name+"="+id+"&parent_id="+parent_id+"&r="+Math.random(),
+					url:PATH+"front.php?action="+type+"&do=comment_insert&comment_content="+encodeURI(comment_content)+"&comment_name="+encodeURI(comment_name)+"&comment_email="+encodeURI(comment_email)+"&comment_site="+encodeURI(comment_site)+"&"+type_name+"="+id+"&parent_id="+parent_id+"&r="+Math.random()+(code_status==1?"&code="+encodeURI(code):""),
 					dataType:"text",
 					success:function(e){
+						if(e=='ERROR:CODE'){
+							alert('验证码不正确');
+							return false;
+						}
 						if(e=='EMPTY:NAME'){
 							alert('大名不能为空');
 							return false;
@@ -110,23 +128,18 @@ $.fn.scrollToTop=function(){
 		$("html,body").animate({scrollTop:0});return false;
 	});
 }
-function draft(){
+function draft(width,height){
 	$.ajax({
 		url:PATH+'front.php?action=content&do=draft',
 		success:function(e){
 			$.box({
 					title:'投稿中心',
-					width:700,
-					height:520,
+					width:width,
+					height:height,
 					close_button:true,
 					html:e,
 					callback:function(){
 						e=$('#draft_content').xheditor({
-								shortcuts:{
-									'ctrl+enter':function(){
-										$('#article_info').submit();
-									}
-								},
 								tools:'simple',
 								plugins:{
 									Code:{c:'btnCode',t:'插入代码',h:1,e:function(){

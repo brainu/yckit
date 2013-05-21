@@ -24,7 +24,7 @@ if($this->do=='comment'){
 			$array[$row['comment_id']]['content']=$row['comment_content'];
 			$array[$row['comment_id']]['reply']=$row['comment_reply'];
 			$array[$row['comment_id']]['email']=$row['comment_email'];
-			if(!file_exists("data/user/".$row['user_id'].".jpg")){
+			if(!file_exists("data/user/".$row['user_id'].".jpg"||$row['user_id']==0)){
 				$array[$row['comment_id']]['avatar']=PATH.'core/images/avatar-comment.png';	
 			}else{
 				$array[$row['comment_id']]['avatar']=PATH.'data/user/'.$row['user_id'].'.jpg';
@@ -46,7 +46,7 @@ if($this->do=='comment'){
 					$array2[$row2['comment_id']]['content']=$row2['comment_content'];
 					$array2[$row2['comment_id']]['reply']=$row2['comment_reply'];
 					$array2[$row2['comment_id']]['email']=$row2['comment_email'];
-					if(!file_exists("data/user/".$row2['user_id'].".jpg")){
+					if(!file_exists("data/user/".$row2['user_id'].".jpg")||$row2['user_id']==0){
 						$array2[$row2['comment_id']]['avatar']=PATH.'core/images/avatar-comment.png';	
 					}else{
 						$array2[$row2['comment_id']]['avatar']=PATH.'data/user/'.$row2['user_id'].'.jpg';
@@ -77,6 +77,12 @@ if($this->do=='comment'){
 }
 if($this->do=='comment_insert'){
 	check_request();
+	$code=empty($_GET['code'])?'':addslashes(trim($_GET['code']));
+	if($_SESSION['code']!=$code){
+		exit('ERROR:CODE');
+	}else{
+		unset($_SESSION['code']);
+	}
 	$comment_name=empty($_GET['comment_name'])?'':addslashes(trim($_GET['comment_name']));
 	$comment_email=empty($_GET['comment_email'])?'':addslashes(trim($_GET['comment_email']));
 	$comment_site=empty($_GET['comment_site'])?'':addslashes(trim($_GET['comment_site']));

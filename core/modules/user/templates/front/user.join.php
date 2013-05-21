@@ -7,6 +7,20 @@ function check_join(){
 	var user_login=$('#user_login').val();
 	var user_key=$('#user_key').val();
 	var user_nickname=$('#user_nickname').val();
+	var code_status=$('#code_status').val();
+	if(code_status==1){
+		var code=$('#user_code').val();
+		if($.trim(code)==''){
+			alert('验证码不能为空');
+			$('#user_code').focus();
+			return false;
+		}
+		if(code.length!=4){
+			alert('验证码长度不正确');
+			$('#user_code').focus();
+			return false;
+		}
+	}
 	if($.trim(user_login)==''){
 		alert('帐号不能为空');
 		$('#user_login').focus();
@@ -47,7 +61,7 @@ function check_join(){
 <tr>
 <td align="right">邮箱：</td>
 <td><input type="text" name="user_login" id="user_login" class="input" size="30"  tabindex="1"/></td>
-<td><a href="javascript:user_box('会员登陆',400,220,'login');">登录会员</a></td>
+<td><a href="javascript:user_box('会员登陆',400,{if $config.code_status==1}340{else}220{/if},'login');">登录会员</a></td>
 </tr>
 <tr>
 <td align="right">密码：</td>
@@ -63,14 +77,25 @@ function check_join(){
 <td><input type="text" name="user_nickname" id="user_nickname" value="{$template.session.qq_nickname}" class="input" size="30" maxlength="10"  tabindex="4"/></td>
 <td></td>
 </tr>
+
+<!--{if $config.code_status==1}-->
 <tr>
 <td>&nbsp;</td>
-<td><input type="submit" value=" 注 册 " id="user_submit" class="btn"/>
+<td colspan="2"> 
+    <input type="text" class="input" id="user_code" name="code"   tabindex="2"/> 请参照下图输入验证码
+    <div style="padding:5px"></div>
+    <img src="{$path}code.php" onclick="this.src='{$path}code.php?'+Number(new Date())" style="cursor:pointer" />
+</td>
+</tr>
+<!--{/if}-->
+<input type="hidden" id="code_status" value="{$config.code_status}"/>
+<tr>
+<td>&nbsp;</td>
+<td colspan="2"><input type="submit" value=" 注 册 " id="user_submit" class="btn"/>
 <!--{if $config.qq}-->
 <a href="{$path}front.php?action=user&do=qq"><img src="{$path}core/modules/user/templates/front/images/qq_login.gif" align="absmiddle"/></a>
 <!--{/if}-->
 </td>
-<td></td>
 </tr>
 </table>
 </form>

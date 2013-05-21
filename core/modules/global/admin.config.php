@@ -18,6 +18,7 @@ if($this->do=='config_update'){
 	$array['smtp_password']=empty($_POST['smtp_server'])?'':addslashes(trim($_POST['smtp_password']));
 	$array['smtp_port']=empty($_POST['smtp_server'])?'':addslashes(trim($_POST['smtp_port']));
 	$array['smtp_mail']=empty($_POST['smtp_mail'])?'':addslashes(trim($_POST['smtp_mail']));
+	$array['code_status']=intval($_POST['code_status']);
 
 	$watermark_image=upload($_FILES['watermark_image'],'data/','png,jpg');
 	$array['watermark_status']=intval($_POST['watermark_status']);

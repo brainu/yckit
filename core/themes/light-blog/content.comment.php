@@ -24,11 +24,18 @@
         	<div class="textbox-submit" id="comment_insert">发送提交</div>
         </div>
         {if !$template.session.user_id}
-        <div class="textbox-tip">请<a href="javascript:void(user_box('会员登陆',400,220,'login'))">登录</a>后操作</div>
+        <div class="textbox-tip">请<a href="javascript:void(user_box('会员登陆',400,{if $config.code_status==1}340{else}220{/if},'login'))">登录</a>后操作</div>
         {/if}
         </div>
 
     </div>
+    {if $config.code_status==1}
+    <table>
+    <tr><td width="60" height="50">&nbsp;</td><td><input type="text" class="input" id="code"/> 请参照下图输入验证码</td></tr>
+    <tr><td>&nbsp;</td><td><img src="{$path}code.php" onclick="this.src='{$path}code.php?'+Number(new Date())" style="cursor:pointer" /></td></tr>
+    </table>
+    {/if}
+    <input type="hidden" id="code_status" value="{$config.code_status}"/>
     <div class="clear"></div>
 </dd>
  <!--{if $comment}-->
