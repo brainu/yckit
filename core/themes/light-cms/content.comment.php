@@ -5,9 +5,7 @@
 <dl id="comments">
  
 <dt>发布评论</dt>
-		<input type="hidden" id="comment_name" value="{$template.session.user_nickname|default:游客}"/>
-		<input type="hidden" id="comment_email"value="{$template.session.user_login}" />
-		<input type="hidden" id="comment_site" value=""/>
+ 
 <dd class="comments-form">
     <div class="avatar"><img onerror="this.src='{$path}core/images/avatar.jpg'"  src="{if $template.session.user_id>0}
     	{$path}data/user/{$template.session.user_id}.jpg
@@ -17,15 +15,17 @@
     <div class="main" style="margin-right:0">
     	<div class="textbox">
 
-        <textarea id="comment_content"  {if !$template.session.user_id}disabled{/if} onclick="$('.comments-form-item').slideDown()"></textarea>
+        <textarea id="comment_content"  {if $config.user_comment} {if !$template.session.user_id}disabled{/if} {/if} onclick="$('.comments-form-item').slideDown()"></textarea>
         <input type="hidden" id="parent_id" value="0"/>
         <div class="textbox-bottom">
         	<div class="textbox-info">欢迎您，{$template.session.user_nickname|default:游客}</div>
         	<div class="textbox-submit" id="comment_insert">发送提交</div>
         </div>
+        {if $config.user_comment}
         {if !$template.session.user_id}
-       <div class="textbox-tip">请<a href="javascript:void(user_box('会员登陆',400,{if $config.code_status==1}340{else}220{/if},'login'))">登录</a>后操作</div>
+        <div class="textbox-tip">请<a href="javascript:void(user_box('会员登陆',400,{if $config.code_status==1}340{else}220{/if},'login'))">登录</a>后操作</div>
         {/if}
+         {/if}
         </div>
 
     </div>
@@ -46,7 +46,6 @@
     <tr><td width="60" height="50">&nbsp;</td><td><input type="text" class="input" id="comment_site" size="30" value=""/> 输入网站</td></tr>
     </table>
     </div>
-    <input type="hidden" id="code_status" value="{$config.code_status}"/>
     <div class="clear"></div>
 </dd>
  <!--{if $comment}-->

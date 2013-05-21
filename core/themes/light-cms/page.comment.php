@@ -13,15 +13,17 @@
     	{/if}" align="absmiddle"/></div>
     <div class="main" style="margin-right:0">
     	<div class="textbox">
-        <textarea id="comment_content"  {if !$template.session.user_id}disabled{/if} onclick="$('.comments-form-item').slideDown()"></textarea>
+        <textarea id="comment_content"   {if $config.user_comment} {if !$template.session.user_id}disabled{/if} {/if} onclick="$('.comments-form-item').slideDown()"></textarea>
         <input type="hidden" id="parent_id" value="0"/>
         <div class="textbox-bottom">
         	<div class="textbox-info">欢迎您，{$template.session.user_nickname|default:游客}</div>
         	<div class="textbox-submit" id="comment_insert">发送提交</div>
         </div>
+        {if $config.user_comment}
         {if !$template.session.user_id}
         <div class="textbox-tip">请<a href="javascript:void(user_box('会员登陆',400,{if $config.code_status==1}340{else}220{/if},'login'))">登录</a>后操作</div>
         {/if}
+         {/if}
         </div>
 
     </div>

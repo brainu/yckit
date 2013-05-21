@@ -10,7 +10,7 @@ $query[]="CREATE TABLE IF NOT EXISTS `".DB_PREFIX."link` (
 	  `link_status` tinyint(1) unsigned NOT NULL default '0',
 	  PRIMARY KEY  (`link_id`)
 	) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
-$query[]="INSERT INTO `db_link` (`link_id`, `link_name`, `link_text`, `link_url`, `link_sort`, `link_status`) VALUES(1, 'YCKIT', '', 'http://yckit.com', 1, 1),(2, '域名抢注', '', 'http://yumingqiangzhu.com', 1, 1);";
+$query[]="INSERT INTO `db_link` (`link_id`, `link_name`, `link_text`, `link_url`, `link_sort`, `link_status`) VALUES(1, 'YCKIT', '', 'http://yckit.com', 1, 1);";
 
 if(count($query)>0){
 	foreach($query as $sql)$this->db->query($sql);

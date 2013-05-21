@@ -30,6 +30,13 @@
 	</td>
 	</tr>
 
+	<tr>
+	<td width="120">会员登录评论:</td>
+	<td>
+	<label><input type="checkbox" name="user_comment" size="15" value="1" {if $config.user_comment==1}checked{/if}/> 启用</lable>
+	</td>
+	</tr>
+
 	</table>
 	</fieldset>
 	<fieldset>

@@ -1,1 +1,1 @@
-<?php $version='V2013 Release 0515';if(strpos($_SERVER['SCRIPT_NAME'],'yckit.version.php')!==false)exit($version);
+<?php $version='V2013 Develop 0522';if(strpos($_SERVER['SCRIPT_NAME'],'yckit.version.php')!==false)exit($version);
