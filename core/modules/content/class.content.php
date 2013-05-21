@@ -77,11 +77,11 @@ if(!class_exists('content_class')){
 					$content=$this->template->fetch('content.list.php');
 				}
 				$name="list".$i.".html";
-				$path=$this->uri($category_id,false,false);
-				file_put_contents(ROOT.$path.$name,$content);
+				$path=$this->uri($category_id,false,false,true);
+				file_put_contents($path.$name,$content);
 				if(empty($category['index_template'])&&$i==1&&!file_exists(ROOT.'/core/themes/'.$this->theme.'/content.category.index.template.'.$category['dir'].'.php')){
 					$name="index.html";
-					file_put_contents(ROOT.$path.$name,$content);
+					file_put_contents($path.$name,$content);
 				}
 			}
 		}
@@ -117,8 +117,8 @@ if(!class_exists('content_class')){
 				}else{
 					$content=$this->template->fetch('content.view.php');
 				}
-				$path=$this->uri($article['category_id'],$article_id,$article['html']);
-				file_put_contents(ROOT.$path,$content);
+				$path=$this->uri($article['category_id'],$article_id,$article['html'],true);
+				file_put_contents($path,$content);
 			}else{
 				$explode=explode($tag,$article['content']);
 				$page_count=count($explode);
@@ -598,7 +598,7 @@ if(!class_exists('content_class')){
 
 			return $tmp;
 		}
-		function uri($category_id,$article_id=0,$article_html=false){
+		function uri($category_id,$article_id=0,$article_html=false,$is_put=false){
 			if($this->config['content_mode']==0){
 				if($article_id>0){
 					$uri=PATH."content.php?id=".$article_id;
@@ -606,7 +606,7 @@ if(!class_exists('content_class')){
 					$uri=PATH."content.php?cid=".$category_id;
 				}
 			}elseif($this->config['content_mode']==1){
-				$uri=PATH.$this->category_parent_path($category_id).'/';
+				$uri=($is_put?ROOT.'/':PATH).$this->category_parent_path($category_id).'/';
 				if($article_html!=false)$uri.=$article_html.'.html';
 				
 			}elseif($this->config['content_mode']==2){
