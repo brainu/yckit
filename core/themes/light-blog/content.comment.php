@@ -5,9 +5,7 @@
 <dl id="comments">
  
 <dt>发布评论</dt>
-		<input type="hidden" id="comment_name" value="{$template.session.user_nickname|default:游客}"/>
-		<input type="hidden" id="comment_email"value="{$template.session.user_login}" />
-		<input type="hidden" id="comment_site" value=""/>
+ 
 <dd class="comments-form">
     <div class="avatar"><img onerror="this.src='{$path}core/images/avatar.jpg'"  src="{if $template.session.user_id>0}
     	{$path}data/user/{$template.session.user_id}.jpg
@@ -17,25 +15,36 @@
     <div class="main" style="margin-right:0">
     	<div class="textbox">
 
-        <textarea id="comment_content"  {if !$template.session.user_id}disabled{/if}></textarea>
+        <textarea id="comment_content"  {if !$template.session.user_id}disabled{/if} onclick="$('.comments-form-item').slideDown()"></textarea>
         <input type="hidden" id="parent_id" value="0"/>
         <div class="textbox-bottom">
         	<div class="textbox-info">欢迎您，{$template.session.user_nickname|default:游客}</div>
         	<div class="textbox-submit" id="comment_insert">发送提交</div>
         </div>
+
         {if !$template.session.user_id}
         <div class="textbox-tip">请<a href="javascript:void(user_box('会员登陆',400,{if $config.code_status==1}340{else}220{/if},'login'))">登录</a>后操作</div>
         {/if}
         </div>
 
     </div>
-    {if $config.code_status==1}
+    <div class="comments-form-item" style="display:none">
     <table>
-    <tr><td width="60" height="50">&nbsp;</td><td><input type="text" class="input" id="code"/> 请参照下图输入验证码</td></tr>
-    <tr><td>&nbsp;</td><td><img src="{$path}code.php" onclick="this.src='{$path}code.php?'+Number(new Date())" style="cursor:pointer" /></td></tr>
+    <tr><td width="60" height="50">&nbsp;</td>
+        <td width="300"><input type="text" class="input" id="comment_name" size="30" value="{$template.session.user_nickname|default:游客}"/> 输入昵称</td>
+        <td rowspan="2">
+            {if $config.code_status==1}
+            <input type="text" class="input" id="code"/> 请参照下图输入验证码
+            <br /> <br />
+            <img src="{$path}code.php" onclick="this.src='{$path}code.php?'+Number(new Date())" style="cursor:pointer" />
+            {/if}
+            <input type="hidden" id="code_status" value="{$config.code_status}"/>
+        </td>
+    </tr>
+    <tr><td width="60" height="50">&nbsp;</td><td><input type="text" class="input" id="comment_email" size="30" value="{$template.session.user_login}"/> 输入邮箱</td></tr>
+    <tr><td width="60" height="50">&nbsp;</td><td><input type="text" class="input" id="comment_site" size="30" value=""/> 输入网站</td></tr>
     </table>
-    {/if}
-    <input type="hidden" id="code_status" value="{$config.code_status}"/>
+    </div>
     <div class="clear"></div>
 </dd>
  <!--{if $comment}-->

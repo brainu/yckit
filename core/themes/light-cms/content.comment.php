@@ -17,7 +17,7 @@
     <div class="main" style="margin-right:0">
     	<div class="textbox">
 
-        <textarea id="comment_content"  {if !$template.session.user_id}disabled{/if}></textarea>
+        <textarea id="comment_content"  {if !$template.session.user_id}disabled{/if} onclick="$('.comments-form-item').slideDown()"></textarea>
         <input type="hidden" id="parent_id" value="0"/>
         <div class="textbox-bottom">
         	<div class="textbox-info">欢迎您，{$template.session.user_nickname|default:游客}</div>
@@ -29,12 +29,23 @@
         </div>
 
     </div>
-        {if $config.code_status==1}
+    <div class="comments-form-item" style="display:none">
     <table>
-    <tr><td width="60" height="50">&nbsp;</td><td><input type="text" class="input" id="code"/> 请参照下图输入验证码</td></tr>
-    <tr><td>&nbsp;</td><td><img src="{$path}code.php" onclick="this.src='{$path}code.php?'+Number(new Date())" style="cursor:pointer" /></td></tr>
+    <tr><td width="60" height="50">&nbsp;</td>
+        <td width="300"><input type="text" class="input" id="comment_name" size="30" value="{$template.session.user_nickname|default:游客}"/> 输入昵称</td>
+        <td rowspan="2">
+            {if $config.code_status==1}
+            <input type="text" class="input" id="code"/> 请参照下图输入验证码
+            <br /> <br />
+            <img src="{$path}code.php" onclick="this.src='{$path}code.php?'+Number(new Date())" style="cursor:pointer" />
+            {/if}
+            <input type="hidden" id="code_status" value="{$config.code_status}"/>
+        </td>
+    </tr>
+    <tr><td width="60" height="50">&nbsp;</td><td><input type="text" class="input" id="comment_email" size="30" value="{$template.session.user_login}"/> 输入邮箱</td></tr>
+    <tr><td width="60" height="50">&nbsp;</td><td><input type="text" class="input" id="comment_site" size="30" value=""/> 输入网站</td></tr>
     </table>
-    {/if}
+    </div>
     <input type="hidden" id="code_status" value="{$config.code_status}"/>
     <div class="clear"></div>
 </dd>
