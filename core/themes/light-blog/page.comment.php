@@ -2,9 +2,6 @@
 
 <dl id="comments">
 <dt>发布评论</dt>
-		<input type="hidden" id="comment_name" value="{$template.session.user_nickname|default:游客}"/>
-		<input type="hidden" id="comment_email"value="{$template.session.user_login}" />
-		<input type="hidden" id="comment_site" value=""/>
 <dd class="comments-form">
     <div class="avatar"><img onerror="this.src='{$path}core/images/avatar.jpg'"  src="{if $template.session.user_id>0}
     	{$path}data/user/{$template.session.user_id}.jpg
