@@ -82,7 +82,7 @@ if($this->do=='page_insert'){
 		$array['menu_link']=PATH.$page_html.".html";
 		$array['menu_description']='';
 		$array['menu_target']=0;
-		$array['menu_sort']=$this->db->count("SELECT COUNT(*) from ".DB_PREFIX."menu")+1;
+		$array['menu_sort']=$this->db->count("SELECT menu_id from ".DB_PREFIX."menu")+1;
 		$array['menu_status']=$page_is_display;
 		$array['parent_id']=0;
 		$this->db->insert(DB_PREFIX."menu",$array);
