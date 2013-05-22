@@ -9,6 +9,7 @@ if($this->do=='callback'){
         $array['open_id']=$_SESSION['qq_openid'];
         $this->db->update(DB_PREFIX."user",$array,"user_id='".$_SESSION['user_id']."'");   
         $user->qq_avatar($_SESSION['user_id']);
+        redirect(isset($_SESSION['REFERER'])?$_SESSION['REFERER']:PATH); 
     }else{
         if(!empty($_SESSION['qq_openid'])){
             $row=$this->db->row("SELECT * FROM ".DB_PREFIX."user WHERE open_id='".$_SESSION['qq_openid']."' LIMIT 1");
