@@ -7,6 +7,10 @@ if($this->do=='callback'){
     if(!empty($_SESSION['user_id'])){
         $array=array();
         $array['open_id']=$_SESSION['qq_openid'];
+        $array['user_nickname']=$_SESSION['qq_nickname'];
+        $array['user_login_ip']=get_ip();
+        $array['user_login_time']=$_SERVER['REQUEST_TIME'];
+        $array['user_login_ip']=get_ip();
         $this->db->update(DB_PREFIX."user",$array,"user_id='".$_SESSION['user_id']."'");   
         $user->qq_avatar($_SESSION['user_id']);
         redirect(isset($_SESSION['REFERER'])?$_SESSION['REFERER']:PATH); 
