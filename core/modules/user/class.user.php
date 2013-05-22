@@ -89,6 +89,6 @@ class user_class extends base{
 	    return $arr;
 	}
 	function qq_avatar($id){
-		@file_put_contents("data/user/".$id.".jpg",@file_get_contents($_SESSION['qq_avatar']));
+		if($id>0)@file_put_contents("data/user/".$id.".jpg",@file_get_contents($_SESSION['qq_avatar']));
 	}
 }

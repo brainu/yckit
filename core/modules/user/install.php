@@ -15,8 +15,6 @@ $query[]="CREATE TABLE IF NOT EXISTS `".DB_PREFIX."user` (
   `role_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `open_id` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_login` (`user_login`),
-  UNIQUE KEY `user_nickname` (`user_nickname`),
   KEY `open_id` (`open_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 
