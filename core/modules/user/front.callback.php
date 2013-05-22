@@ -23,6 +23,11 @@ if($this->do=='callback'){
                 $_SESSION['user_nickname']=$row['user_nickname'];
                 $_SESSION['role_id']=$row['role_id'];
                 $_SESSION['open_id']=$_SESSION['qq_openid'];
+                $array=array();
+                $array['user_login_ip']=get_ip();
+                $array['user_login_time']=$_SERVER['REQUEST_TIME'];
+                $array['user_login_ip']=get_ip();
+                $this->db->update(DB_PREFIX."user",$array,"user_id='".$row['user_id']."'");   
                 redirect(isset($_SESSION['REFERER'])?$_SESSION['REFERER']:PATH); 
             }else{
                 $array=array();
