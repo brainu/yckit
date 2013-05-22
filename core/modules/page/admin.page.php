@@ -135,7 +135,7 @@ if($this->do=='page_update'){
 	}
 	#要是生成文件名被修改则删除旧文件
 	if($page_html_old!=$page_html){
-		@unlink(ROOT.'/'.$page_html_old);
+		@unlink(ROOT.'/'.$page_html_old.'.html');
 	}
 	$array=array();
 	$array['page_title']=$page_title;
