@@ -8,7 +8,7 @@
 			<li><a href="javascript:user_box('头像设置',160,190,'avatar');"><img src="{$path}data/user/<!--{$template.session.user_id}-->.jpg" onerror="this.src='{$path}core/images/avatar.jpg'" align="absmiddle" width="60" style="margin:5px"/></a></li>
 			<li><a href="javascript:user_box('修改密码',420,200,'password');">修改密码</a></li>
 			<li><a href="javascript:user_box('头像设置',160,190,'avatar');">头像设置</a></li>
-			<li><a href="{$path}front.php?action=user&do=qq"><!--{if $template.session.open_id}-->更新QQ<!---->绑定QQ<!--{/if}--></a></li>
+			<li><a href="{$path}front.php?action=user&do=qq"><!--{if $template.session.open_id}-->更新QQ<!--{else}-->绑定QQ<!--{/if}--></a></li>
 		</ul>
 	</li>
 	<!--{if $config.content_draft_status==1}-->
