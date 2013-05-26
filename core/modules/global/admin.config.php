@@ -26,13 +26,12 @@ if($this->do=='config_update'){
 	if(!empty($watermark_image)){
 		$array['watermark_image']=$watermark_image;
 	}else{
-		$array['watermark_image']=$_POST['watermark_image_old'];
+		$array['watermark_image']=@$_POST['watermark_image_old'];
 	}
 	if(!empty($_POST['watermark_image_delete'])){
 		@unlink(ROOT.PATH.'data/'.$_POST['watermark_image_old']);
 		$array['watermark_image']='';
 	}
-
 	$theme_config_include=ROOT.'/core/themes/'.$this->theme.'/config.php';
 	if(file_exists($theme_config_include)){
 		@include $theme_config_include;

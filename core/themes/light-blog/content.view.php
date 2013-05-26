@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="<!--{$path}-->core/styles/jquery.lightbox.css" />
 <script>
 $(function(){
-  $('#menu-{$category.id}').addClass("current");
+  $("#menu-{$article.menu_id}").addClass("current");
   $('.post-content img').wrap(function(){return "<a href='"+$(this).attr('src')+"' rel='lightbox'></a>";});
   update_article_click({$article.id});
   <?php $this->hook('onload');?>

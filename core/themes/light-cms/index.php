@@ -10,6 +10,7 @@
 <!--{include file="static.php"}-->
 <script>
 $(function(){
+	$("#menu-index").addClass("current");
 	<?php $this->hook('onload');?>
 });
 </script>

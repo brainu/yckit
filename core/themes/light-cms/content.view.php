@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="<!--{$path}-->core/styles/jquery.lightbox.css" />
 <script>
 $(function(){
+  $("#menu-{$article.menu_id}").addClass("current");
   $('.post-content img').wrap(function(){return "<a href='"+$(this).attr('src')+"' rel='lightbox'></a>";});
   update_article_click({$article.id});
   <?php $this->hook('onload');?>
@@ -50,11 +51,9 @@ $(function(){
               <!--{$article.click_count}--> views
             </div>
           </div>
-
-          <div class="post-content"><!--{$article.content}-->
+   
+          <div class="post-content"><!--{$article.content}--></div>
  
-          </div>
-
           {if $config.ad}<div class="post-ad">{$config.ad}</div>{/if}
           <div class="post-nav">
             上一篇：

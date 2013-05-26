@@ -7,7 +7,7 @@
  * 不允许对程序代码以任何形式任何目的的再发布。
  * ============================================================================
  * 作者：野草
- * 更新：2013年05月10日
+ * 更新：2013年05月24日
  */
 define('ROOT',dirname($_SERVER['SCRIPT_FILENAME']));
 require_once ROOT.'/core/yckit.base.php';
@@ -61,6 +61,7 @@ class admin extends base{
 			}elseif($this->do=='remote_save_image'){
 				$this->check_login();
 				$path=isset($_GET['path'])?trim($_GET['path']):'data/other/';
+				$path.=date("Ym")."/";
 				$urls=explode('|',$_POST['urls']);
 				$url_count=count($urls);
 				for($i=0;$i<$url_count;$i++){
@@ -72,7 +73,8 @@ class admin extends base{
 			}elseif($this->do=='upload'){
 				$this->check_login();
 				$path=isset($_GET['path'])?trim($_GET['path']):'data/other/';
-				$attachment=upload($_FILES['filedata'],$path,EXT);
+				$path.=date("Ym")."/";
+				$attachment=upload($_FILES['filedata'],$path,EXT,20,'',true);
 				$ext=get_ext($_FILES['filedata']['name']);
 				if($this->config['watermark_status']==1&&($ext=='jpg'||$ext=='png'||$ext=='gif')){
 					make_watermark(ROOT.'/'.$path.$attachment,ROOT.'/data/'.$this->config['watermark_image'],$this->config['watermark_position']);
@@ -111,17 +113,8 @@ class admin extends base{
 			}
 		}else{
 			$this->check_login();
-			if($this->action=='other'){
-				$plugins=$this->get_plugins();
-				foreach($plugins as $dir){
-					if (is_file(ROOT.'/core/plugins/'.$dir.'/menu.php')&&$this->do==$dir){
-						include ROOT.'/core/plugins/'.$dir.'/admin.php';
-					}
-				}
-			}else{
-				$file=ROOT.'/core/modules/'.$this->action.'/admin.index.php';
-				if(file_exists($file))include($file);
-			}
+			$file=ROOT.'/core/modules/'.$this->action.'/admin.index.php';
+			if(file_exists($file))include($file);
 		}
 	}
 	private function remote_save_image($url,$path,$is_remote=true){
@@ -141,6 +134,7 @@ class admin extends base{
 			}
 		}
 		$filename=$path.upload_name($ext);
+		mk_dir($path);
 		#保存到服务器
 		file_put_contents(ROOT.'/'.$filename,$content);
 		//检查mime是否为图片，需要php.ini中开启gd2扩展
@@ -251,7 +245,7 @@ class admin extends base{
 		if(file_exists(ROOT.'/admin.php')){
 			$array[]='警告：请您立即修改根目录下 <u>admin</u>.php文件名，防止黑客猜中密码闯入！';
 		}
-		if(file_exists(ROOT.'/install.php')||file_exists(ROOT.'/install.lock')){
+		if(file_exists(ROOT.'/install.php')){
 			$array[]='警告：请您立即删除根目录下 <u>install.php</u>文件，防止别人初始化您的系统！';
 		}
 		return $array;

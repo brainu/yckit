@@ -36,7 +36,7 @@ if($this->do=='page_add'){
 	$array['description']='';
 	$array['content_mode']=0;
 	$array['content']='';
-	$array['sort']=0;
+	$array['sort']=1;
 	$array['html']='page-'.(intval($this->db->value(DB_PREFIX."page","max(page_id)","1=1 ORDER BY page_id DESC"))+1);
 	$array['is_comment']=1;
 	$array['is_display']=1;
@@ -86,6 +86,8 @@ if($this->do=='page_insert'){
 		$array['menu_status']=$page_is_display;
 		$array['parent_id']=0;
 		$this->db->insert(DB_PREFIX."menu",$array);
+		$menu_id=$this->db->id();
+		$this->db->update(DB_PREFIX."page","menu_id=$menu_id","page_id=$page_id");
 	}
 	if($page_is_display==1){
 		$page->html_page($page_id);
@@ -109,12 +111,22 @@ if($this->do=='page_edit'){
 	$array['html']=$row['page_html'];
 	$array['is_comment']=$row['page_is_comment'];
 	$array['is_display']=$row['page_is_display'];
+	$array['menu_id']=$row['menu_id'];
+	#调出菜单
+	$menu=array();
+	$result=$this->db->result("SELECT * FROM ".DB_PREFIX."menu WHERE menu_status=1 AND parent_id=0");
+	foreach($result as $row){
+		$menu[$row['menu_id']]['id']=$row['menu_id'];
+		$menu[$row['menu_id']]['name']=$row['menu_name'];
+	}
+	$this->template->in('menu',$menu);
 	$this->template->in('page',$array);
 	$this->template->in('mode','update');
 	$this->template->out('page.info.php');
 }
 if($this->do=='page_update'){
 	$this->check_access('page_list');
+	$menu_id=empty($_POST['menu_id'])?0:intval($_POST['menu_id']);
 	$page_id=empty($_POST['page_id'])?0:intval($_POST['page_id']);
 	$page_title=empty($_POST['page_title'])?'':trim(addslashes($_POST['page_title']));
 	$page_keywords=empty($_POST['page_keywords'])?'':trim(addslashes($_POST['page_keywords']));
@@ -148,6 +160,7 @@ if($this->do=='page_update'){
 	$array['page_html']=$page_html;
 	$array['page_is_comment']=$page_is_comment;
 	$array['page_is_display']=$page_is_display;
+	$array['menu_id']=$menu_id;
 	$this->db->update(DB_PREFIX."page",$array,"page_id=$page_id");
 	if($page_is_display==1){
 		$page->html_page($page_id);

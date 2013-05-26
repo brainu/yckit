@@ -12,7 +12,7 @@ function check_login(){
 			$('#user_code').focus();
 			return false;
 		}
-		if(code.length!=4){
+		if(code.length!=3){
 			alert('验证码长度不正确');
 			$('#user_code').focus();
 			return false;
@@ -52,7 +52,7 @@ function check_login(){
 <tr>
 <td align="right" nowrap>帐号：</td>
 <td><input type="text" name="user_login" id="user_login" class="input" size="30" tabindex="1"/></td>
-<td nowrap><a href="javascript:user_box('会员注册',400,{if $config.code_status==1}400{else}320{/if},'join');">注册会员</a></td>
+<td nowrap><a href="javascript:user_box('会员注册',400,{if $config.code_status==1}330{else}320{/if},'join');">注册会员</a></td>
 </tr>
 <tr>
 <td align="right">&nbsp;</td>
@@ -65,18 +65,17 @@ function check_login(){
 </tr>
 <!--{if $config.code_status==1}-->
 <tr>
-<td>&nbsp;</td>
+<td>验证码：</td>
 <td colspan="2"> 
-    <input type="text" class="input" id="user_code" name="code"  tabindex="3"/> 请参照下图输入验证码
-    <div style="padding:5px"></div>
-    <img src="{$path}code.php" onclick="this.src='{$path}code.php?'+Number(new Date())" style="cursor:pointer" />
+    <input type="text" class="input" id="user_code" name="code"  tabindex="3" style="width:65px"/>  
+     <img src="{$path}code.php" onclick="this.src='{$path}code.php?'+Number(new Date())" style="cursor:pointer" align="absmiddle"/>
 </td>
 </tr>
 <!--{/if}-->
 <input type="hidden" id="code_status" value="{$config.code_status}"/>
 <tr>
 <td>&nbsp;</td>
-<td><input type="submit" value=" 登 录 " id="user_submit" class="btn" tabindex="3"/>
+<td><input type="submit" value=" 登 录 " id="user_submit" class="btn" tabindex="4"/>
 <!--{if $config.qq}-->
 <a href="{$path}front.php?action=user&do=qq"><img src="{$path}core/modules/user/templates/front/images/qq_login.gif" align="absmiddle"/></a>
 <!--{/if}-->

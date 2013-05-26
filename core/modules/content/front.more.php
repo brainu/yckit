@@ -29,10 +29,12 @@ if($this->do=='more'){
 				$array[$row['article_id']]['comment_count']=$row['article_comment_count'];
 				$array[$row['article_id']]['click_count']=$row['article_click_count'];
 				$array[$row['article_id']]['category_id']=$row['category_id'];
-				$array[$row['article_id']]['category_name']=$this->db->value(DB_PREFIX."content_category","category_name","category_id=".$row['category_id']);
-				$array[$row['article_id']]['category_path']=$content->uri($row['category_id']);
+				$category_info=$content->get_category_info($row['category_id']);
+				$array[$row['article_id']]['category_name']=$category_info['name'];
+				$array[$row['article_id']]['category_path']=$category_info['uri'];
 				$array[$row['article_id']]['is_new']=$_SERVER['REQUEST_TIME']-$row['article_time']<3600*24*3?true:false;
 				$array[$row['article_id']]['is_nofollow']=$row['article_is_nofollow'];
+				$array[$row['article_id']]=array_merge($array[$row['article_id']],$content->get_fields($row['category_id'],$row['article_id']));
 			}
 			$pager=pager(get_self(),'',$page_current,$page_size,$count,'array');
 		}

@@ -38,6 +38,7 @@ $query[]="CREATE TABLE IF NOT EXISTS `".DB_PREFIX."content_category` (
   `category_image_height` int(4) unsigned NOT NULL DEFAULT '0',
   `category_is_display` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `parent_id` smallint(3) unsigned NOT NULL DEFAULT '0',
+  `menu_id` int(4) unsigned DEFAULT '0',
   PRIMARY KEY (`category_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 

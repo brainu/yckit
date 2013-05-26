@@ -12,6 +12,7 @@ if($this->do=='config_update'){
 	$array['user_front_join_active']=empty($_POST['user_front_join_active'])?0:1;
 	$array['user_comment']=empty($_POST['user_comment'])?0:1;
 	$array['user_admin_list_size']=empty($_POST['user_admin_list_size'])?9:intval($_POST['user_admin_list_size']);
+	$array['user_front_avatar_size']=empty($_POST['user_front_avatar_size'])?9:intval($_POST['user_front_avatar_size']);
 	$array['qq']=empty($_POST['qq'])?0:intval($_POST['qq']);
 	$array['qq_appid']=empty($_POST['qq_appid'])?'':trim($_POST['qq_appid']);
 	$array['qq_appkey']=empty($_POST['qq_appkey'])?'':trim($_POST['qq_appkey']);

@@ -15,6 +15,18 @@ function get_comment(type,id,page){
 		url:PATH+'front.php?action='+type+'&do=comment&'+type_name+'='+id+'&page='+page,
 		success:function(result){
 			$("#comment").html(result);
+			var cookie_comment_name=$.cookie('comment_name');
+			var cookie_comment_email=$.cookie('comment_email');
+			var cookie_comment_site=$.cookie('comment_site');
+			if(cookie_comment_name!=null){
+				$('#comment_name').val(cookie_comment_name);	
+			}
+			if(cookie_comment_email!=null){
+				$('#comment_email').val(cookie_comment_email);	
+			}
+			if(cookie_comment_site!=null){
+				$('#comment_site').val(cookie_comment_site);	
+			}
 			$("#comment_insert").click(function(){
 				var comment_content=$('#comment_content').val();
 				var comment_name=$('#comment_name').val();
@@ -29,7 +41,7 @@ function get_comment(type,id,page){
 						$('#code').focus();
 						return false;
 					}
-					if(code.length!=4){
+					if(code.length!=3){
 						alert('验证码长度不正确');
 						$('#code').focus();
 						return false;
@@ -56,6 +68,10 @@ function get_comment(type,id,page){
 					$('#comment_email').focus();
 					return false;
 				}
+				$.cookie('comment_name',comment_name.strip_tags());
+				$.cookie('comment_email',comment_email.strip_tags());
+				$.cookie('comment_site',comment_site.strip_tags());
+
 				$.ajax({
 					type:"GET",
 					url:PATH+"front.php?action="+type+"&do=comment_insert&comment_content="+encodeURI(comment_content)+"&comment_name="+encodeURI(comment_name)+"&comment_email="+encodeURI(comment_email)+"&comment_site="+encodeURI(comment_site)+"&"+type_name+"="+id+"&parent_id="+parent_id+"&r="+Math.random()+(code_status==1?"&code="+encodeURI(code):""),

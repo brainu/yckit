@@ -30,6 +30,7 @@ if($this->do=='category_add'||$this->do=='category_edit'){
 		$array['image_width']=$row['category_image_width'];
 		$array['image_height']=$row['category_image_height'];
 		$array['is_display']=$row['category_is_display'];
+		$array['menu_id']=$row['menu_id'];
 		$this->template->in('category_option',$content->category_option(0,$row['parent_id']));
 		$field_list=$this->db->result("SELECT * FROM ".DB_PREFIX."content_field WHERE category_id='$category_id'");
 		$field=array();
@@ -40,6 +41,14 @@ if($this->do=='category_add'||$this->do=='category_edit'){
 			$field[$row['field_id']]['status']=$row['field_status'];
 		}
 		$this->template->in('field',$field);
+		#调出菜单
+		$menu=array();
+		$result=$this->db->result("SELECT * FROM ".DB_PREFIX."menu WHERE menu_status=1 AND parent_id=0");
+		foreach($result as $row){
+			$menu[$row['menu_id']]['id']=$row['menu_id'];
+			$menu[$row['menu_id']]['name']=$row['menu_name'];
+		}
+		$this->template->in('menu',$menu);
 	}
 	$this->template->in('category',$array);
 	$this->template->in('mode',$mode);
@@ -63,7 +72,7 @@ if($this->do=='category_insert'||$this->do=='category_update'){
 		$category_deep=$row['category_deep']+1;
 	}
 	if($category_name=='')alert('分类名称不能为空');
-	if(file_exists($category_dir))alert('分类目录已存在');
+	
 	if(empty($category_dir)&&!empty($category_name))$category_dir=pinyin($category_name);
 	$array=array();
 	$array['category_name']=$category_name;
@@ -76,9 +85,9 @@ if($this->do=='category_insert'||$this->do=='category_update'){
 	$array['category_image_width']=$category_image_width;
 	$array['category_image_height']=$category_image_height;
 	$array['parent_id']=$parent_id;
-
 	if($this->do=='category_insert'){
 		$this->check_access('content_category_add');
+		if(file_exists($category_dir))alert('分类目录已存在');
 		$this->db->insert(DB_PREFIX."content_category",$array);
 		$category_id=$this->db->id();
 		if(!empty($_POST['into_menu'])){
@@ -91,6 +100,8 @@ if($this->do=='category_insert'||$this->do=='category_update'){
 			$array['menu_status']=$category_is_display;
 			$array['parent_id']=0;
 			$this->db->insert(DB_PREFIX."menu",$array);
+			$menu_id=$this->db->id();
+			$this->db->update(DB_PREFIX."content_category","menu_id=$menu_id","category_id=$category_id");
 		}
 		# 自定义字段
 		$field_name=empty($_POST['field_name_'])?array():$_POST['field_name_'];
@@ -112,6 +123,7 @@ if($this->do=='category_insert'||$this->do=='category_update'){
 				@rename($path.'/'.$category_dir_old,$path.'/'.$category_dir);
 			}
 		}
+		$menu_id=empty($_POST['menu_id'])?0:intval($_POST['menu_id']);
 		$category_id=empty($_POST['category_id'])?0:intval($_POST['category_id']);
 		$array=array();
 		$array['category_name']=$category_name;
@@ -124,6 +136,7 @@ if($this->do=='category_insert'||$this->do=='category_update'){
 		$array['category_image_width']=$category_image_width;
 		$array['category_image_height']=$category_image_height;
 		$array['parent_id']=$parent_id;
+		$array['menu_id']=$menu_id;
 		$this->db->update(DB_PREFIX."content_category",$array,"category_id=$category_id");
 		#自定义字段
 		$field_id=empty($_POST['field_id'])?array():$_POST['field_id'];

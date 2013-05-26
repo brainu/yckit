@@ -8,6 +8,7 @@
 <!--{include file="static.php"}-->
 <script>
 $(function(){
+  $("#menu-{$page.menu_id}").addClass("current");
   <?php $this->hook('onload');?>
 });
 </script>

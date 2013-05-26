@@ -359,6 +359,8 @@ function upload_check($name,$ext){
 				$format='html';
 			}elseif (substr($str ,0, 3)=='FLV'){
 				$format='flv';
+			}else{
+				$format=$ext;
 			}
 		}
 	}
@@ -578,6 +580,7 @@ function get_os($AGENT=''){
 	elseif(strpos($AGENT,"Windows NT 5.2"))$os="Windows 2003";
 	elseif(strpos($AGENT,"Windows NT 6.0"))$os="Windows Vista";
 	elseif(strpos($AGENT,"Windows NT 6.1"))$os="Windows 7";
+	elseif(strpos($AGENT,"Windows NT 6.2"))$os="Windows 8";
 	elseif(strpos($AGENT,"Windows NT"))$os="Windows NT";
 	elseif(strpos($AGENT,"Windows CE"))$os="Windows CE";
 	elseif(strpos($AGENT,"ME"))$os="Windows ME";
@@ -588,7 +591,10 @@ function get_os($AGENT=''){
 	elseif(strpos($AGENT,"OpenBSD"))$os="OpenBSD";
 	elseif(strpos($AGENT,"FreeBSD"))$os="FreeBSD";
 	elseif(strpos($AGENT,"AIX"))$os="AIX";
+	elseif(strpos($AGENT,"iPhone"))$os="iPhone";
+	elseif(strpos($AGENT,"iPad"))$os="iPad";
 	elseif(strpos($AGENT,"Mac"))$os="Mac";
+	elseif(strpos($AGENT,"Android"))$os="Android";
 	else $os="Other";
 	return $os;
 }
@@ -608,6 +614,10 @@ function get_bs($AGENT=''){
 	elseif(strpos($AGENT,"MSIE 6"))$browser="IE6";
 	elseif(strpos($AGENT,"MSIE 7"))$browser="IE7";
 	elseif(strpos($AGENT,"MSIE 8"))$browser="IE8";
+	elseif(strpos($AGENT,"MSIE 9"))$browser="IE9";
+	elseif(strpos($AGENT,"MSIE 10"))$browser="IE10";
+	elseif(strpos($AGENT,"MSIE 11"))$browser="IE11";
+	elseif(strpos($AGENT,"Safari"))$browser="Safari";
 	else $browser="Other";
 	return $browser;
 }
@@ -1019,23 +1029,11 @@ function remove_slashes($s){
 }
 function format_time($time){
 	$dur=$_SERVER['REQUEST_TIME']-$time;
-	if($dur < 60){
-		return $dur.'秒前';
-	}else{
-		if($dur < 3600){
-			return floor($dur/60).'分钟前';
-		}else{
-			if($dur < 86400){
-				return floor($dur/3600).'小时前';
-			}else{
-				if($dur < 259200){
-					return floor($dur/86400).'天前';
-				}else{
-					return date('Y-m-d H:i',$time);
-				}
-			}
-		}
-	}
+	if($dur < 60)return $dur.'秒前';
+	if($dur < 3600)return floor($dur/60).'分钟前';
+	if($dur < 86400)return floor($dur/3600).'小时前';
+	if($dur < 259200)return floor($dur/86400).'天前';
+	return date('Y-m-d H:i',$time);
 }
 
 function array_multi2single($array){
@@ -1048,4 +1046,37 @@ function array_multi2single($array){
 		}
 	}
 	return $result_array;
+}
+function ping($type='baidu',$site_name,$site_url,$url,$rss){
+	$method="<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+	<methodCall>
+	<methodName>weblogUpdates.extendedPing</methodName>
+	<params><param><value>{$site_name}</value></param>
+	<param><value>{$site_url}</value></param>
+	<param><value>{$url}</value></param>
+	<param><value>{$rss}</value></param>
+	</params>
+	</methodCall>";
+	if($type=='baidu'){
+		$url='http://ping.baidu.com/ping/RPC2';
+	}else{
+		$url='http://blogsearch.google.com/ping/RPC2';
+	}
+	$c = curl_init();
+	curl_setopt($c, CURLOPT_URL, $url);
+	curl_setopt($c, CURLOPT_RETURNTRANSFER,1);
+	curl_setopt($c, CURLOPT_POST, 1);
+	curl_setopt($c, CURLOPT_HTTPHEADER,array(
+		"POST ".$url." HTTP/1.0",
+		"Content-type: text/xml;charset=\"utf-8\"",
+		"Accept: text/xml","Content-length: ".strlen($method)
+	));
+	curl_setopt($c, CURLOPT_POSTFIELDS, $method);
+	$result=curl_exec ($c);
+	curl_close($c);
+	if($type=='baidu'){
+		return strpos($result, "<int>0</int>") ? true : false;
+	}else{
+		return strpos($result, "<boolean>0</boolean>") ? true : false;
+	}
 }

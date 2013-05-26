@@ -43,6 +43,7 @@ if(!class_exists('content_class')){
 					$array[$row['article_id']]['id']=$row['article_id'];
 					$array[$row['article_id']]['title']=$row['article_title'];
 					$array[$row['article_id']]['description']=$row['article_description'];
+					$array[$row['article_id']]['keywords']=@explode(",",$row['article_keywords']);
 					$array[$row['article_id']]['author']=$row['article_author'];
 					$array[$row['article_id']]['image']=$row['article_image'];
 					$array[$row['article_id']]['content']=$this->get_short_content($row['article_content']);
@@ -413,6 +414,16 @@ if(!class_exists('content_class')){
 			}
 			return $path;
 		}
+		function category_root($category_id){
+			if($category_id>0){
+				$row=$this->db->row("SELECT category_id,parent_id FROM ".DB_PREFIX."content_category WHERE category_id=$category_id LIMIT 0,1");
+				if($row['parent_id']==0){
+					return $row['category_id'];
+				}else{
+					$this->category_root($row['category_id']);
+				}
+			}
+		}
 		/*
 		 * 直接显示该栏目的父路径
 		 *
@@ -445,6 +456,13 @@ if(!class_exists('content_class')){
 			$array['image_width']=$row['category_image_width'];
 			$array['image_height']=$row['category_image_height'];
 			$array['is_display']=$row['category_is_display'];
+			if($row['parent_id']>0){
+				$root_id=$this->category_root($row['category_id']);
+				$array['menu_id']=$this->value(DB_PREFIX."content_category","menu_id","category_id=$root_id");
+			}else{
+				$array['menu_id']=$row['menu_id'];
+			}
+			$array['uri']=$this->uri($row['category_id']);
 			return $array;
 		}
 
@@ -478,8 +496,10 @@ if(!class_exists('content_class')){
 			$array['is_nofollow']	=$row['article_is_nofollow'];
 			$array['is_display']	=$row['article_is_display'];
 			$array['category_id']=$row['category_id'];
-			$array['category_name']=$this->db->value(DB_PREFIX."content_category","category_name","category_id=".$row['category_id']);
-			$array['category_path']=$this->uri($row['category_id']);
+			$category_info=$this->get_category_info($row['category_id']);
+			$array['menu_id']=$category_info['menu_id'];
+			$array['category_name']=$category_info['name'];
+			$array['category_path']=$category_info['uri'];
 			$array=array_merge($array,$this->get_fields($row['category_id'],$row['article_id']));
 			return $array;
 		}
@@ -531,13 +551,12 @@ if(!class_exists('content_class')){
 					$array[$row['article_id']]['id']=$row['article_id'];
 					$array[$row['article_id']]['title']=$row['article_title'];
 					$array[$row['article_id']]['description']=$row['article_description'];
+					$array[$row['article_id']]['keywords']=@explode(",",$row['article_keywords']);
 					$array[$row['article_id']]['content']=$this->get_short_content($row['article_content']);
 					$array[$row['article_id']]['image']=$row['article_image'];
 					$array[$row['article_id']]['author']=$row['article_author'];
 					$array[$row['article_id']]['click_count']=number_format($row['article_click_count']);
 					$array[$row['article_id']]['comment_count']=number_format($row['article_comment_count']);
-					$array[$row['article_id']]['category_name']=$this->db->value(DB_PREFIX."content_category","category_name","category_id=".$row['category_id']);
-					$array[$row['article_id']]['category_path']=$this->uri($row['category_id']);
 					$array[$row['article_id']]['category_id']=$row['category_id'];
 					$array[$row['article_id']]['is_nofollow']=$row['article_is_nofollow'];
 					$array[$row['article_id']]['uri']=$this->uri($row['category_id'],$row['article_id'],$row['article_html']);
@@ -545,6 +564,9 @@ if(!class_exists('content_class')){
 					$array[$row['article_id']]['timestamp']=$row['article_time'];
 					$array[$row['article_id']]['is_best']=$row['article_is_best'];
 					$array[$row['article_id']]['is_new']=$_SERVER['REQUEST_TIME']-$row['article_time']<3600*24*3?true:false;
+					$category_info=$this->get_category_info($row['category_id']);
+					$array[$row['article_id']]['category_name']=$category_info['name'];
+					$array[$row['article_id']]['category_path']=$category_info['uri'];
 					$array[$row['article_id']]=array_merge($array[$row['article_id']],$this->get_fields($row['category_id'],$row['article_id']));
 				}
 			}

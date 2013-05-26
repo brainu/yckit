@@ -1,4 +1,4 @@
-<?php exit?><?php
+<?php
 define('ROOT',dirname($_SERVER['SCRIPT_FILENAME']));
 require_once ROOT.'/core/yckit.base.php';
 class content extends base{
@@ -61,14 +61,16 @@ class content extends base{
 				$array[$row['article_id']]=array_merge($array[$row['article_id']],$this->content->get_fields($row['category_id'],$row['article_id']));//add 2012/11/7
 			}
 			$pager=pager(get_self(),'',$page_current,$page_size,$count,'array');
-			$this->template->in('category',$category);
+			
 			$this->template->in('article',$array);
 			$this->template->in('article_click',$this->content->get_articles(array('limit'=>$this->config['click_size'],'category_id'=>$category_id,'orderby'=>'article_click_count')));
 			$this->template->in('article_best',$this->content->get_articles(array('limit'=>$this->config['best_size'],'is_best'=>1,'category_id'=>$category_id,'orderby'=>'article_id')));
 			$this->template->in("article_category",$this->content->get_category($category_id));
-			$this->template->in("here",$this->content->get_here($category_id));
+			
 			$this->template->in('pager',$pager);
 		}
+		$this->template->in("here",$this->content->get_here($category_id));
+		$this->template->in('category',$category);
 		if(file_exists(ROOT.'/core/themes/'.$this->theme.'/content.category.list.template.'.$category['dir'].'.php')){
 			$this->template->out('content.category.list.template.'.$category['dir'].'.php',$this->cache_id);
 		}else{

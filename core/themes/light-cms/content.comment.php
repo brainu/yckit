@@ -1,11 +1,5 @@
 <?php exit?>
-
-
-
 <dl id="comments">
- 
-<dt>发布评论</dt>
- 
 <dd class="comments-form">
     <div class="avatar"><img onerror="this.src='{$path}core/images/avatar.jpg'"  src="{if $template.session.user_id>0}
     	{$path}data/user/{$template.session.user_id}.jpg
@@ -15,19 +9,22 @@
     <div class="main" style="margin-right:0">
     	<div class="textbox">
 
-        <textarea id="comment_content"  {if $config.user_comment} {if !$template.session.user_id}disabled{/if} {/if} onclick="$('.comments-form-item').slideDown()"></textarea>
+        <textarea id="comment_content"  {if $config.user_comment} {if !$template.session.user_id||$template.session.user_login=='-'}disabled{/if} {/if} onclick="$('.comments-form-item').slideDown()"></textarea>
         <input type="hidden" id="parent_id" value="0"/>
         <div class="textbox-bottom">
         	<div class="textbox-info">欢迎您，{$template.session.user_nickname|default:游客}</div>
         	<div class="textbox-submit" id="comment_insert">发送提交</div>
         </div>
-        {if $config.user_comment}
+{if $config.user_comment}
+    {if $template.session.user_login=='-'}
+        <div class="textbox-tip">请<a href="javascript:user_box('完善帐号信息',340,200,'update');">完善帐号信息</a>后操作</div>
+    {else}
         {if !$template.session.user_id}
-        <div class="textbox-tip">请<a href="javascript:void(user_box('会员登陆',400,{if $config.code_status==1}340{else}220{/if},'login'))">登录</a>后操作</div>
+            <div class="textbox-tip">请<a href="javascript:void(user_box('会员登陆',400,{if $config.code_status==1}340{else}220{/if},'login'))">登录</a>后操作</div>
         {/if}
-         {/if}
+    {/if}
+{/if}
         </div>
-
     </div>
     <div class="comments-form-item" style="display:none">
     <table>
@@ -48,6 +45,8 @@
     </div>
     <div class="clear"></div>
 </dd>
+
+
  <!--{if $comment}-->
 <dt>网友评论 <!--{$count}--> 条</dt>
 <!--{foreach from=$comment item=comment}-->
@@ -56,10 +55,16 @@
     <div class="avatar" data-id="1"><img src="<!--{$comment.avatar}-->" align="absmiddle"/></div>
     <div class="main">
     	<p class="main-content"><!--{$comment.content}--></p>
-    	<p class="main-meta"><strong><!--{$comment.name}--></strong> <!--{$comment.time}--> <!--{$comment.ip_address}--> 
-    		<!--{if $template.session.user_id>0}-->
-    			<a href="javascript:void(reply_comment(<!--{$comment.id}-->))">回复</a>
-    		<!--{/if}-->
+    	<p class="main-meta">
+            <!--{if $comment.site}-->
+            <a href="<!--{$comment.site}-->" title="访问主页" target="_blank"><!--{$comment.name}--></a>
+            <!--{else}-->
+            <strong><!--{$comment.name}--></strong>
+            <!--{/if}-->
+             <!--{$comment.time}-->
+            来自：<!--{$comment.ip_address}-->
+            系统：<!--{$comment.os}-->/<!--{$comment.bs}--> 
+    		<a href="javascript:void(reply_comment(<!--{$comment.id}-->))">回复</a>
     	</p>
 		  <!--{if $comment.reply}-->
 		  <p class="main-admin">管理员：<!--{$comment.reply}--></p>
@@ -71,10 +76,19 @@
 			    <div class="avatar" data-id="1"><img src="<!--{$child.avatar}-->" align="absmiddle"/></div>
 			    <div class="main">
 			    	<p class="main-content"><!--{$child.content}--></p>
-			    	<p class="main-meta"><strong><!--{$child.name}--></strong> <!--{$comment.time}--> <!--{$comment.ip_address}-->  
-    		<!--{if $template.session.user_id>0}-->
+			    	<p class="main-meta">
+
+             <!--{if $child.site}-->
+            <a href="<!--{$child.site}-->" title="访问主页" target="_blank"><!--{$child.name}--></a>
+            <!--{else}-->
+            <strong><!--{$child.name}--></strong>
+            <!--{/if}-->
+             <!--{$child.time}-->
+            来自：<!--{$child.ip_address}-->
+            系统：<!--{$child.os}-->/<!--{$child.bs}--> 
+ 
     			<a href="javascript:void(reply_comment(<!--{$comment.id}-->))">回复</a>
-    		<!--{/if}-->
+ 
 			    	</p>
   <!--{if $child.reply}-->
   <p class="main-admin">管理员：<!--{$child.reply}--></p>

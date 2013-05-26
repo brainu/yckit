@@ -33,7 +33,7 @@ if($this->do=='callback'){
                 $array=array();
                 $array['user_login']='-';
                 $array['user_key']='-';
-                $array['user_nickname']=$_SESSION['qq_nickname'];
+                $array['user_nickname']='';
                 $array['user_join_time']=$_SERVER['REQUEST_TIME'];
                 $array['user_status']=1;
                 $array['user_login_time']=$_SERVER['REQUEST_TIME'];
@@ -44,7 +44,7 @@ if($this->do=='callback'){
                 $this->db->insert(DB_PREFIX."user",$array);
                 $user_id=$this->db->id();
                 $_SESSION['user_id']=$user_id;
-                $_SESSION['user_login']='';
+                $_SESSION['user_login']='-';
                 $_SESSION['user_nickname']=$_SESSION['qq_nickname'];
                 $_SESSION['role_id']=0;
                 $_SESSION['open_id']=$_SESSION['qq_openid'];

@@ -40,6 +40,7 @@ class page_class extends base{
 		$array['html']=$row['page_html'];
 		$array['is_comment']=$row['page_is_comment'];
 		$array['is_display']=$row['page_is_display'];
+		$array['menu_id']=$row['menu_id'];
 		return $array;
 	}
 	function get_nav(){

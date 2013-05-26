@@ -6,7 +6,7 @@
         <h2 class="site-description"><!--{$config.notice|escape:html}--></h2>
         <div id="menu">
                 <ul>
-                <li><a href="<!--{$path}-->" id="menu-0">首页</a></li>
+                <li><a href="<!--{$path}-->" id="menu-index">首页</a></li>
                 <!--{foreach from=$menu item=menu}-->
                 <li>
                         <a href="<!--{$menu.link}-->" id="menu-<!--{$menu.id}-->" <!--{if $menu.target==1}-->target="_blank"<!--{/if}-->>         <!--{$menu.name|escape:html}--></a>

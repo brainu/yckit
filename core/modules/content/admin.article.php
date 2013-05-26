@@ -168,6 +168,7 @@ if($this->do=='article_insert'||$this->do=='article_update'){
 				}
 			}
 		}
+		@unlink("data/draft.txt");
 	}else{
 		$this->check_access('content_article_edit');
 		$article_id=empty($_POST['article_id'])?0:intval($_POST['article_id']);
@@ -451,4 +452,20 @@ if($this->do=='create_go'){
 		@unlink(ROOT.'/'.$filename);
 	}
 	echo'</body></html>';
+}
+if($this->do=='autosave'){
+	$array=array();
+	$array['file']=trim($_POST['file']);
+	$array['title']=trim($_POST['title']);
+	$array['content']=trim($_POST['content']);
+	$value=base64_encode(serialize($array));
+	file_put_contents("data/draft.txt", $value);
+}
+if($this->do=='autoload'){
+	$data=file_get_contents("data/draft.txt");
+	if(!empty($data)){
+		$data=unserialize(base64_decode($data));
+		echo json_encode($data);
+	}
+	
 }

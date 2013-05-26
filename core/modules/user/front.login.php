@@ -7,11 +7,13 @@ if($this->do=='login'){
 }
 if($this->do=='login-check'){
 	check_request();
-	$code=empty($_POST['code'])?'':addslashes(trim($_POST['code']));
-	if($_SESSION['code']!=$code){
-		exit('验证码错误');
-	}else{
-		unset($_SESSION['code']);
+	if($this->config['code_status']==1){
+		$code=empty($_POST['code'])?'':addslashes(trim($_POST['code']));
+		if($_SESSION['code']!=$code){
+			exit('验证码错误');
+		}else{
+			unset($_SESSION['code']);
+		}	
 	}
 	$user_login=empty($_POST['user_login'])?'':trim(addslashes($_POST['user_login']));
 	$user_key=empty($_POST['user_key'])?'':md5($_POST['user_key']);
@@ -24,7 +26,6 @@ if($this->do=='login-check'){
 	}
 	$row=$this->db->row($sql);
 	if($row){
-		if(!empty($row['open_id']))echo('您不是网站注册会员，请使用第三方登陆！');
 		if($row['user_status']==0)echo('账户可能锁定或者没有激活！');
 		$_SESSION['user_id']=$row['user_id'];
 		$_SESSION['user_login']=$row['user_login'];

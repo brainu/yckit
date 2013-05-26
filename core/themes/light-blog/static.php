@@ -1,9 +1,5 @@
 <?php exit?>
-<meta http-equiv="pragma" content="no-cache" />
-<meta http-equiv="cache-control" content="no-cache" />
-<meta name="viewport" content="width=1024" />
-<meta content="yes" name="apple-mobile-web-app-capable">
-<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <?php if($this->check_plugin('rss')):?>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<!--{$path}-->rss.xml" />
 <?php endif;?>

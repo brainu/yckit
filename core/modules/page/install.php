@@ -13,6 +13,7 @@ $query[]="CREATE TABLE IF NOT EXISTS `".DB_PREFIX."page` (
   `page_html` varchar(100) NOT NULL DEFAULT '',
   `page_is_comment` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `page_is_display` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `menu_id` int(4) unsigned DEFAULT '0',
   PRIMARY KEY (`page_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 

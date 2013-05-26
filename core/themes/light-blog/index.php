@@ -23,6 +23,7 @@ $(function(){
 	}
 	load(p);
 	{/if}
+	$("#menu-index").addClass("current");
 	<?php $this->hook('onload');?>
 });
 function load(page){

@@ -15,7 +15,7 @@ function check_join(){
 			$('#user_code').focus();
 			return false;
 		}
-		if(code.length!=4){
+		if(code.length!=3){
 			alert('验证码长度不正确');
 			$('#user_code').focus();
 			return false;
@@ -61,7 +61,7 @@ function check_join(){
 <tr>
 <td align="right">邮箱：</td>
 <td><input type="text" name="user_login" id="user_login" class="input" size="30"  tabindex="1"/></td>
-<td><a href="javascript:user_box('会员登陆',400,{if $config.code_status==1}340{else}220{/if},'login');">登录会员</a></td>
+<td><a href="javascript:user_box('会员登陆',400,{if $config.code_status==1}280{else}220{/if},'login');">登录会员</a></td>
 </tr>
 <tr>
 <td align="right">密码：</td>
@@ -80,12 +80,12 @@ function check_join(){
 
 <!--{if $config.code_status==1}-->
 <tr>
-<td>&nbsp;</td>
+<td>验证码：</td>
 <td colspan="2"> 
-    <input type="text" class="input" id="user_code" name="code"   tabindex="2"/> 请参照下图输入验证码
-    <div style="padding:5px"></div>
-    <img src="{$path}code.php" onclick="this.src='{$path}code.php?'+Number(new Date())" style="cursor:pointer" />
+    <input type="text" class="input" id="user_code" name="code"  tabindex="3" style="width:65px"/>  
+     <img src="{$path}code.php" onclick="this.src='{$path}code.php?'+Number(new Date())" style="cursor:pointer" align="absmiddle"/>
 </td>
+</tr>
 </tr>
 <!--{/if}-->
 <input type="hidden" id="code_status" value="{$config.code_status}"/>
