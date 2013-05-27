@@ -6,6 +6,7 @@ $result=$this->db->result("SELECT * FROM ".DB_PREFIX."content_article WHERE arti
 if($result){
 	foreach($result as $row){
 		$array[$row['article_id']]['loc']=get_url().$content->uri($row['category_id'],$row['article_id'],$row['article_html']);
+		$array[$row['article_id']]['loc']=str_replace('//','/',$array[$row['article_id']]['loc']);
 		$array[$row['article_id']]['lastmod']=date('c',$row['article_time']);
 	}
 }
