@@ -105,8 +105,19 @@ function load_editor(){
 		}
 	});
 }
+function editor_insert(html){
+	e.pasteHTML(html);
+}
+function editor_insert_file(filename){
+	var ext=filename.split(".")[1];
+	if(ext=='gif'||ext=='jpg'||ext=='png'||ext=='bmp'){
+		editor_insert('<img src="'+filename+'" alt=""/>');
+	}else{
+		editor_insert('<a href="'+filename+'">'+filename+'</a>');
+	}
+}
 function delete_file(filename){
-	var file=$('#article_file').val();
+	var file=$('#page_file').val();
 		file=file.split(",");
 	var file_count=file.length;
 	var temp=[];
@@ -115,7 +126,7 @@ function delete_file(filename){
 				temp.push(file[i]);
 			}
 		}
-		$('#article_file').val(temp.join(','));
+		$('#page_file').val(temp.join(','));
 	$.ajax({
 		type:'GET',
 		url:'?action=page&do=delete_file&filename='+encodeURIComponent(filename),
