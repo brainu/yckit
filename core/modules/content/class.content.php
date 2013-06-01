@@ -80,7 +80,7 @@ if(!class_exists('content_class')){
 				$name="list".$i.".html";
 				$path=$this->uri($category_id,false,false,true);
 				file_put_contents($path.$name,$content);
-				if(empty($category['index_template'])&&$i==1&&!file_exists(ROOT.'/core/themes/'.$this->theme.'/content.category.index.template.'.$category['dir'].'.php')){
+				if($i==1&&!file_exists(ROOT.'/core/themes/'.$this->theme.'/content.category.index.template.'.$category['dir'].'.php')){
 					$name="index.html";
 					file_put_contents($path.$name,$content);
 				}
@@ -377,7 +377,7 @@ if(!class_exists('content_class')){
 				foreach($result as $row){
 					$array[]=$row['category_id'];
 					if($this->category_have($row['category_id'])){
-						$array[]=$this->category_id_array($row['category_id']);
+						$array = array_merge($array,$this->category_id_array($row['category_id']));
 					}
 				}
 			}
@@ -420,7 +420,7 @@ if(!class_exists('content_class')){
 				if($row['parent_id']==0){
 					return $row['category_id'];
 				}else{
-					$this->category_root($row['category_id']);
+					$this->category_root($row['parent_id']);
 				}
 			}
 		}
@@ -458,7 +458,7 @@ if(!class_exists('content_class')){
 			$array['is_display']=$row['category_is_display'];
 			if($row['parent_id']>0){
 				$root_id=$this->category_root($row['category_id']);
-				$array['menu_id']=$this->value(DB_PREFIX."content_category","menu_id","category_id=$root_id");
+				$array['menu_id']=$this->db->value(DB_PREFIX."content_category","menu_id","category_id=$root_id");
 			}else{
 				$array['menu_id']=$row['menu_id'];
 			}

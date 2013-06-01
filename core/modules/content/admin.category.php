@@ -58,6 +58,7 @@ if($this->do=='category_add'||$this->do=='category_edit'){
 if($this->do=='category_insert'||$this->do=='category_update'){
 	$category_name=empty($_POST['category_name'])?'':addslashes(trim($_POST['category_name']));
 	$category_dir=empty($_POST['category_dir'])?'':addslashes(trim($_POST['category_dir']));
+	$category_dir_old=empty($_POST['category_dir_old'])?'':addslashes(trim($_POST['category_dir_old']));
 	$category_keywords=empty($_POST['category_keywords'])?'':addslashes(trim($_POST['category_keywords']));
 	$category_description=empty($_POST['category_description'])?'':addslashes(trim($_POST['category_description']));
  	$category_list_limit=empty($_POST['category_list_limit'])?10:intval($_POST['category_list_limit']);
@@ -137,6 +138,7 @@ if($this->do=='category_insert'||$this->do=='category_update'){
 		$array['category_image_height']=$category_image_height;
 		$array['parent_id']=$parent_id;
 		$array['menu_id']=$menu_id;
+		#print_r($array);exit;
 		$this->db->update(DB_PREFIX."content_category",$array,"category_id=$category_id");
 		#自定义字段
 		$field_id=empty($_POST['field_id'])?array():$_POST['field_id'];
