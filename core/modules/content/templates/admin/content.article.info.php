@@ -140,6 +140,12 @@ $(function(){
 	$('#category_id').change(function(){
 		load_fields($(this).val(),article_id);
 	});
+	<!--{if $mode=='insert'}-->
+		autoload();
+		setInterval(function(){
+			autosave();
+		},30000);
+ 	<!--{/if}-->
 });
 function load_fields(category_id,article_id){
 	$.ajax({
@@ -441,5 +447,35 @@ function check_html(id){
 			}
 		});
 	}
+}
+function autosave(){
+	var file=$('#article_file').val();
+	var title=$('#article_title').val();
+	var content=$('#article_content').val();
+	if($.trim(content)!=''){
+		$.ajax({
+			type:'POST',
+			url:'?action=content&do=autosave',
+			data:'title='+encodeURIComponent(title)+'&content='+encodeURIComponent(content)+'&file='+encodeURIComponent(file),
+			success:function(){
+ 				show_tip('当前内容已自动保存为草稿',2,300);
+			}
+		});
+	}	
+}
+function autoload(){
+	$.ajax({
+		url:'?action=content&do=autoload',
+		success:function(result){
+			if(result.length>0){
+				var result=eval("("+result+")");
+				console.log(result);
+				$('#article_file').val(result.file);
+				$('#article_title').val(result.title);
+				$('#article_content').val(result.content);
+				show_tip('系统已把草稿自动载入',2,300);
+			}
+		}
+	});
 }
 </script>

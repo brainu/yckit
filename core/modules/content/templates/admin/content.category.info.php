@@ -5,7 +5,7 @@
 	<div class='layout-body'>
 
 		<form action="?action=content&do=category_<!--{$mode}-->" method="post" enctype="multipart/form-data" onsubmit="return check()">
-		<input type="hidden" name="category_uri_old" value="<!--{$category.uri|escape:html}-->" />
+		<input type="hidden" name="category_dir_old" value="<!--{$category.dir|escape:html}-->" />
 		<input type="hidden" name="category_id" value="<!--{$category.id}-->"/>
 		<fieldset>
 		<legend><b style="color:#B5D53B">栏目信息</b></legend>
