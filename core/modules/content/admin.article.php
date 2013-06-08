@@ -269,15 +269,17 @@ if($this->do=='get_fields'){
 	$article_id=empty($_GET['article_id'])?0:intval($_GET['article_id']);
 	$result=$this->db->result("SELECT * FROM ".DB_PREFIX."content_field WHERE category_id='$category_id' AND field_status=1");
 	$hidden=array();
-	foreach($result as $row){
-		$data=$this->db->row("SELECT * FROM ".DB_PREFIX."content_field_data WHERE field_id='".$row['field_id']."' AND article_id=$article_id");
-		echo $row['field_text']."：";
-		echo"<div class=\"blank\"></div>";
-		echo"<input tabindex=\"2\" type=\"text\" class=\"input\" name=\"field_".$row['field_name']."\" style=\"width:400px\" value=\"".($data['data_value']!=''?trim($data['data_value']):'')."\" />";
-		echo"<div class=\"blank\"></div>";
-		$hidden[]=$row['field_id'].",".$row['field_name'];
+	if($result){
+		foreach($result as $row){
+			$data=$this->db->row("SELECT * FROM ".DB_PREFIX."content_field_data WHERE field_id='".$row['field_id']."' AND article_id=$article_id");
+			echo $row['field_text']."：";
+			echo"<div class=\"blank\"></div>";
+			echo"<input tabindex=\"2\" type=\"text\" class=\"input\" name=\"field_".$row['field_name']."\" style=\"width:400px\" value=\"".($data['data_value']!=''?trim($data['data_value']):'')."\" />";
+			echo"<div class=\"blank\"></div>";
+			$hidden[]=$row['field_id'].",".$row['field_name'];
+		}
+		echo"<input type='hidden' name='fields' value='".implode("|",$hidden)."'/>";
 	}
-	echo"<input type='hidden' name='fields' value='".implode("|",$hidden)."'/>";
 }
 if($this->do=='get_description'){
 	$this->check_access('content_article');
