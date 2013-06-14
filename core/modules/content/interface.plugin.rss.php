@@ -7,7 +7,7 @@ $result=$this->db->result("SELECT * FROM ".DB_PREFIX."content_article WHERE arti
 if($result){
 	foreach($result as $row){
 		$array[$row['article_id']]['title']=$row['article_title'];
-		$array[$row['article_id']]['uri']=get_url().$content->uri($row['category_id'],$row['article_id'],$row['article_html']);
+		$array[$row['article_id']]['uri']=get_url().substr($content->uri($row['category_id'],$row['article_id'],$row['article_html']),1);
 		$array[$row['article_id']]['date']=date('c',$row['article_time']);
 		$array[$row['article_id']]['category']=$this->db->value(DB_PREFIX."content_category","category_name","category_id=".$row['category_id']);
 		$array[$row['article_id']]['description']=$row['article_content'];

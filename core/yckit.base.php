@@ -200,7 +200,7 @@ abstract class base{
 			}else{
 				$array=array();
 			}
-			write_cache('modules',$array);	
+			write_cache('modules',$array);
 		}else{
 			$array=read_cache('modules');
 		}
