@@ -20,7 +20,7 @@ if($this->do=='comment'){
 			$array[$row['comment_id']]['content']=$row['comment_content'];
 			$array[$row['comment_id']]['reply']=$row['comment_reply'];
 			$array[$row['comment_id']]['email']=$row['comment_email'];
-			if(!file_exists("data/user/".$row['user_id'].".jpg")||$row2['user_id']==0){
+			if(!file_exists("data/user/".$row['user_id'].".jpg")||$row['user_id']==0){
 				$array[$row['comment_id']]['avatar']=PATH.'core/images/avatar-comment.png';	
 			}else{
 				$array[$row['comment_id']]['avatar']=PATH.'data/user/'.$row['user_id'].'.jpg';

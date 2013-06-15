@@ -48,7 +48,7 @@
 			<td style="height:60px;width:40px;" align="center" ><input type="checkbox" class="checkbox" name="comment_id[]" value="<!--{$child.id}-->" /></td>
 			<td style="height:60px;width:60px;" align="center" ><img src="<!--{$child.avatar}-->" width="36" height="36" style="border-radius:2px;"/></td>
 			<td>
-				<b style="color:#88D536"><!--{$child.name|escape:html}--></b>：<a href="?action=content&do=comment_edit&content_id=<!--{$child.content_id}-->&comment_id=<!--{$child.id}-->"><!--{$child.content|escape:html}--></a>
+				<b style="color:#88D536"><!--{$child.name|escape:html}--></b>：<a href="?action=page&do=comment_edit&content_id=<!--{$child.content_id}-->&comment_id=<!--{$child.id}-->"><!--{$child.content|escape:html}--></a>
 				<!--{if $child.is_display==0}-->
 				<b style="color:#FE8217">[审核中]</b>
 				<!--{/if}-->
